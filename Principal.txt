@@ -1,0 +1,78 @@
+package Unicesumar;
+
+import java.util.Scanner;
+public class Principal {
+    public static void main (String[] args) {
+        Menus menu1=new Menus();
+        Menus menu2=new Menus();
+        Menus menu3=new Menus();
+        Empresa almoxarifado = new Empresa();
+        
+        do{
+            menu1.menuPrincipal();
+            Scanner opcao = new Scanner(System.in);
+            int op=opcao.nextInt();
+            menu1.setOpcao(op);
+            switch(menu1.getOpcao()){
+                case 1:
+                    do{
+                        menu2.menuInclusao();
+                        Scanner opcao1 = new Scanner(System.in);
+                    int op1 = opcao1.nextInt();
+                    menu2.setOpcao(op1);
+                    switch(menu2.getOpcao()) {
+                        case 1:
+                            almoxarifado.Inclusao();
+                        break;
+                        case 2:
+                            almoxarifado.Alteracao();
+                        break;   
+                        case 3: 
+                            almoxarifado.Pesquisa();
+                        break;    
+                        case 4:
+                            almoxarifado.Exclusao();
+                        break;
+                        case 0:
+                        break;
+                        default:
+                            System.out.println("SELECIONE UMA DAS OPÇÕES DISPONIVEIS");
+                    }    
+                }while (menu2.getOpcao()!=0);
+            break;
+            case 2:
+                do{
+                    menu3.menuMovimentacao();
+                    Scanner opcao2=new Scanner(System.in);
+                    int op2=opcao2.nextInt();
+                    menu3.setOpcao(op2);
+                    switch(menu3.getOpcao()) {
+                          case 1:
+                          almoxarifado.Entrada();
+                          break;
+                          case 2:
+                               almoxarifado.Saida();
+                          break;
+                          case 0:
+                          break;
+                          default:
+                                  System.out.println("SELECIONE UMA DAS OPÇÕES ACIMA");
+                    }
+                }while(menu3.getOpcao()!=0);           
+            break;
+            case 3:
+                almoxarifado.mudaValor();
+            break;
+            case 4:
+                almoxarifado.impressao();
+            break;
+            case 0:
+            break;
+            default:
+                System.out.println("SELECIONE UMA DAS OPÇÕES ACIMA");
+                             }
+        }while (menu1.getOpcao()!=0);            
+        
+    }
+    
+}

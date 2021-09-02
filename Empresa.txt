@@ -1,0 +1,262 @@
+package unicesumar;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Empresa {
+    ArrayList<Produto> custoProd = new ArrayList<Produto>();
+    
+    void impressao(String nome){
+        System.out.println("\nEMPRESA DE IMPORTAÇÃO DE PRODUTOS. \nSISTEMA DE CONTROLE DE ESTOQUE \n"+"IMPRESSÃO\n");
+        for(Produto prod:custoProd){
+            if(prod.getNome().equalsIgnoreCase(nome)){
+                System.out.println("NOME: "+prod.getNome()+ ". "+"PREÇO R$ "+prod.getValor()+". "+"QUANTIDADE: "+ prod.getQtde() + prod.getUnidade());
+            }
+        }
+    }
+    void impressao(){
+        System.out.println("\nEMPRESA DE IMPORTAÇÃO DE PRODUTOS. \nSISTEMA DE CONTROLE DE ESTOQUE \n"+"IMPRESSÃO\n");
+        for(Produto prod:custoProd){
+            System.out.println("NOME: "+prod.getNome()+ ". "+"PREÇO R$ "+prod.getValor()+". "+"QUANTIDADE: "+ prod.getQtde()+prod.getUnidade());
+        }
+    }
+    
+    private boolean buscaNome(String nome){
+        Boolean encontrado=false;
+        for(Produto item:custoProd){
+            if(item.getNome().equalsIgnoreCase(nome)) encontrado=true;
+        }
+        return encontrado;
+    }
+    
+    private boolean buscaPreco(double preco){
+        Boolean valor = false;
+        if(preco>0)valor=true;
+        return valor;
+    }
+    private boolean buscaQtde(int qtde){
+        Boolean quantidade = false;
+        if(qtde>0) quantidade = true;
+        return quantidade;
+    }
+    
+    public void Inclusao(){
+        String novamente="N";
+        do{
+            double valor;
+            int quantidade;
+            System.out.println("\nEMPRESA DE IMPORTAÇÃO DE PRODUTOS LTDA.\n" +
+            "SISTEMA DE CONTROLE DE ESTOQUE\n" +"INCLUSÃO DE PRODUTO");
+            Scanner entrada = new Scanner(System.in);
+            System.out.println("DIGITE O NOME DO PRODUTO: ");
+            String nome = entrada.nextLine();
+            if(buscaNome(nome)){
+                System.out.println("\nJÁ CADASTRADO");
+            }else{
+                do{
+                    System.out.println("VALOR PRODUTO:");
+                    valor= entrada.nextDouble();
+                    if(valor<=0)System.out.println(" VALOR MENOR QUE 0");
+                }while(!buscaPreco(valor));
+                System.out.println("UNIDADE: ");
+                String unidade = entrada.next();
+                do{
+                    System.out.println("QUANTIDADE: ");
+                    quantidade=entrada.nextInt();
+                    if(quantidade<=0)System.out.println("TOTAL DE PRODUTOS MENOR QUE 0");
+                }while(!buscaQtde(quantidade));
+
+                Produto prod =new Produto();
+                Scanner ent = new Scanner(System.in);
+                System.out.println("Prosseguir: "+"S/N");
+                String continua = ent.next();
+                if(continua.equalsIgnoreCase("s")) this.custoProd.add(prod);
+                prod.setNome(nome);
+                prod.setValor(valor);
+                prod.setQtde(quantidade);
+                prod.setUnidade(unidade);
+            }
+            System.out.println("DESEJA INCLUIR UM NOVO PRODUTO? S/N:");
+            novamente=entrada.next();
+        }while(novamente.equalsIgnoreCase("s"));
+    }
+    
+    public void Alteracao(){
+        String novamente="N";
+        do{
+            int qtde=0;
+            double valor=0;
+            System.out.println("EMPRESA DE IMPORTAÇÃO DE PRODUTOS LTDA.\n" +
+            "SISTEMA DE CONTROLE DE ESTOQUE\n" +"ALTERAÇÃO DE PRODUTO");
+            System.out.println("NOME DO PRODUTO: ");
+            Scanner entrada = new Scanner(System.in);
+            String nome = entrada.nextLine();
+            if(buscaNome(nome)){
+                for(Produto prod:custoProd){
+                    if(prod.getNome().equalsIgnoreCase(nome)){
+                        System.out.println("PRODUTO: "+prod.getNome());
+                        System.out.println("QUANTIDADE: "+prod.getQtde()+" "+prod.getUnidade()+".");
+                        System.out.println("VALOR: "+prod.getValor());
+                        do{
+                            System.out.println("NOVA QUANTIDADE: ");
+                            qtde=entrada.nextInt();
+                            if(qtde<=0)System.out.println("TOTAL DE PRODUTOS MENOR QUE 0");
+                        }while(!buscaQtde(qtde));
+                        do{
+                            System.out.println("NOVO VALOR: ");
+                            valor= entrada.nextDouble();
+                            if(valor<=0)System.out.println("VALOR MENOR QUE 0");
+                        }while(!buscaPreco(valor));
+                        System.out.println("NOVA MEDIDA: ");
+                        String unidade = entrada.next();
+                        System.out.println("PROSSEGUIR: S/N");
+                        String continua = entrada.next();
+                        if(continua.equalsIgnoreCase("s")){
+                            prod.setQtde(qtde);
+                            prod.setUnidade(unidade);
+                            prod.setValor(valor);
+                        }else{
+                            System.out.println("PROCESSO ABORTADO!\n");
+                        }
+                    }
+                }
+            }else{
+                System.out.println("NÃO ENCONTRADO!\n");
+            }
+            System.out.println("DESEJA ALTERAR OUTRO PRODUTO? S/N:");
+            novamente=entrada.next();
+        }while(novamente.equalsIgnoreCase("s"));
+    }
+    public void mudaValor(){
+        double valorN=0;
+        System.out.println("EMPRESA DE IMPORTAÇÃO DE PRODUTOS LTDA.\n" +
+        "SISTEMA DE CONTROLE DE ESTOQUE\n" +"REAJUSTE");
+        System.out.println("DIGITE O NOME DO PRODUTO: ");
+        Scanner entrada = new Scanner(System.in);
+        String nome= entrada.nextLine();
+        for(Produto prod:custoProd){
+            if(prod.getNome().equalsIgnoreCase(nome)){
+                System.out.println(prod.getNome());
+                System.out.println(prod.getValor());
+                System.out.println("NOVO PREÇO: ");
+                valorN=entrada.nextDouble();
+                double total = prod.getValor()+((prod.getValor()*valorN)/100);
+                System.out.println("PROSSEGUI; S/N");
+                String continua = entrada.next();
+                if(continua.equalsIgnoreCase("s")){
+                    prod.setValor(total);
+                }else{
+                    System.out.println("NÃO ENCONTRADO");
+                }
+            }
+        }
+    }
+    public void Pesquisa(){
+        String continua="N";
+        System.out.println("EMPRESA DE IMPORTAÇÃO DE PRODUTOS LTDA.\n" +
+        "SISTEMA DE CONTROLE DE ESTOQUE\n" +"CONSULTA DE PRODUTO");
+        do{
+            System.out.println("NOME DO PRODUTO:");
+            Scanner entrada = new Scanner(System.in);
+            String nome = entrada.nextLine();
+            for(Produto prod : custoProd){
+                if(prod.getNome().equalsIgnoreCase(nome)){
+                    impressao(nome);
+                }else{
+                    System.out.println("NÃO ENCONTRADO");
+                }
+            }
+           System.out.println("DESEJA FAZER UMA NOVA PESQUISA? S/N:");
+           continua=entrada.nextLine();
+        }while(continua.equalsIgnoreCase("s"));
+    }
+    
+    private void RemoveItem(String prod){
+        String nome= prod;
+        custoProd.removeIf(item-> item.getNome().equalsIgnoreCase(nome));
+    }
+    public void Exclusao(){
+        String novamente="N";
+        do{
+            System.out.println("EMPRESA DE IMPORTAÇÃO DE PRODUTOS LTDA.\n" +
+            "SISTEMA DE CONTROLE DE ESTOQUE\n" +"EXCLUSÃO DE PRODUTO");
+            System.out.println("NOME PRODUTO:");
+            Scanner entrada= new Scanner(System.in);
+            String nome = entrada.nextLine();
+            impressao(nome);
+            System.out.println("PROSSEGUIR S/N");
+            String continua = entrada.nextLine();
+            if(continua.equalsIgnoreCase("s"))RemoveItem(nome);
+            System.out.println("DESEJA EXCLUIR OUTRO PRODUTO? S/N:");
+            novamente=entrada.next();
+        }while(novamente.equalsIgnoreCase("s"));
+    }
+    
+    public void Entrada(){
+        String novamente="N";
+        do{
+            int adiciona=0;
+            System.out.println("EMPRESA DE IMPORTAÇÃO DE PRODUTOS LTDA.\n" +
+            "SISTEMA DE CONTROLE DE ESTOQUE\n" +"MOVIMENTAÇÃO - ENTRADA DE PRODUTO");
+            System.out.println("INFORME O NOME DO ITEM PARA REGISTRAR A ENTRADA:");
+            Scanner entrada =  new Scanner(System.in);
+            String nome = entrada.nextLine();
+            for(Produto item:custoProd){
+                if(item.getNome().equalsIgnoreCase(nome)){
+                    do{
+                        System.out.println("NOME: "+item.getNome());
+                        System.out.println("QUANTIDADE ATUAL: "+item.getQtde());
+                        System.out.println("NOVA QUANTIDADE: ");
+                        adiciona=entrada.nextInt();
+                        if(adiciona<=0)System.out.println("TOTAL DE PRODUTOS MENOR QUE 0");
+                    }while(!buscaQtde(adiciona));
+                    int total = item.getQtde()+adiciona;
+                    System.out.println("PROSSEGUIR S/N");
+                    String continua = entrada.next();
+                    if(continua.equalsIgnoreCase("s")){
+                        item.setQtde(total);
+                    }else{
+                        System.out.println("\nPRODUTO NÃO CADASTRADO");
+                    }
+                    System.out.println("QUANTIDADE FINAL"+item.getQtde());
+                    break;
+                }
+            }
+            System.out.println("DESEJA FAZER UMA NOVA MOVIMENTAÇÃO? S/N:");
+            novamente=entrada.next();
+        }while(novamente.equalsIgnoreCase("s"));
+    }
+    
+    public void Saida(){
+        int remove=0;
+        System.out.println("EMPRESA DE IMPORTAÇÃO DE PRODUTOS LTDA.\n" +
+        "SISTEMA DE CONTROLE DE ESTOQUE\n" + "MOVIMENTAÇÃO");
+        System.out.println("INFORME O NOME DO ITEM PARA REGISTRAR A BAIXA");
+        Scanner entrada= new Scanner(System.in);
+        Scanner entrada2= new Scanner(System.in);
+        String nome = entrada.nextLine();
+        for(Produto item : custoProd){
+            if(item.getNome().equalsIgnoreCase(nome)){
+                do{
+                    System.out.println(item.getNome());
+                    System.out.println(item.getQtde());
+                    System.out.println("QUANTIDADE: - >");
+                    remove=entrada2.nextInt();
+                    if(remove<=0){
+                        System.out.println("QUANTIDADE MENOR QUE 0");
+                    }
+                }while(!buscaQtde(remove));
+                int total = item.getQtde() - remove;
+                System.out.println("PROSSEGUIR S/N");
+                Scanner ler = new Scanner(System.in);
+                String continua = ler.next();
+                if(continua.equalsIgnoreCase("s")){
+                    item.setQtde(total);
+                    break;
+                }else{
+                    System.out.println("PRODUTO NÃO CADASTRADO");
+                }
+            }
+        }
+    }
+}

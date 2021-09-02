@@ -1,0 +1,56 @@
+package Unicesumar;
+
+
+public class Menus {
+    private int opcao;
+    
+    public void menuPrincipal(){
+        System.out.println("\n EMPRESA DE IMPORTAÇÕES DE PRODUTOS LTDA. \n" +
+        "SISTEMA DE CONTROLE DE ESTOQUE\n" + "MENU PRINCIPAL");
+        System.out.println("\n[1] - CADASTRO DE PRODUTOS.");
+        System.out.println("[2] - MOVIMENTAÇÃO.");        
+        System.out.println("[3] - REAJUSTE DE PREÇOS");        
+        System.out.println("[4] - RELATÓRIOS.");
+        System.out.println("[0] - FINALIZAR / SAIR");
+        System.out.println("OPÇÃO: ");
+        
+            
+    }
+        public void menuInclusão(){
+        System.out.println("************************************************");    
+        System.out.println("\n EMPRESA DE IMPORTAÇÕES DE PRODUTOS LTDA. \n" +
+        "SISTEMA DE CONTROLE DE ESTOQUE\n" + "CADASTRO DE PRODUTOS");
+        System.out.println("\n[1] - INCLUSÃO.");
+        System.out.println("[2] - ALTERAÇÃO.");        
+        System.out.println("[3] - CONSULTA");        
+        System.out.println("[4] - EXCLUSÃO");
+        System.out.println("[0] - RETORNAR");
+        System.out.println("OPÇÃO: ");
+        
+            
+    }
+        public void menuMovimentacao(){
+        System.out.println("\n EMPRESA DE IMPORTAÇÕES DE PRODUTOS LTDA. \n" +
+        "SISTEMA DE CONTROLE DE ESTOQUE\n" + "MOVIMENTAÇÃO");
+        System.out.println("\n[1] - ENTRADA.");
+        System.out.println("[2] - SAÍDA.");        
+        System.out.println("[3] - RETORNAR.");        
+        System.out.println("OPÇÃO: ");
+        }
+
+    
+    public int getOpcao() {
+        return opcao;
+    }
+
+    
+    public void setOpcao(int opcao) {
+        this.opcao = opcao;
+    }
+
+    void menuInclusao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        
+     
+}
